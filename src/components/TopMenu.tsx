@@ -1,7 +1,7 @@
 import Image from 'next/image'
 export default function TopMenu(){
     return (
-        <div className="w-full h-20 flex fixed z-50">
+        <div className="w-full h-20 flex fixed top-0 z-50">
             <div className='w-1/2 md:w-1/4 h-full bg-[#C76B98] flex items-center px-5'>
                 <Image src='/img/logo-no-background.png' alt='logo' width={1500} height={647} className='h-12 md:h-14 w-fit'/>
             </div>
