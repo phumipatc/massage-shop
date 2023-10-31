@@ -41,7 +41,7 @@ export default function Home() {
           </div>
           <button className='text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4'>Search</button>
         </div>
-        <div className='flex flex-col gap-3 m-5 mt-8 w-full items-center'>
+        <div className='flex flex-col gap-3 md:gap-6 m-5 mt-8 w-full items-center'>
           {mockShop.map((shop,index) => (
             <ShopCard key={index} shop={shop}/>
           ))}
