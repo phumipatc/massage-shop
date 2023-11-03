@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import SignupModal from '@/components/SignupModal'
 
 export default function Banner(){
     return (
@@ -20,7 +21,7 @@ export default function Banner(){
                             <h1 className='text-xl font-bold'>or</h1>
                             <span className='h-1 w-1/3 bg-black'/>
                         </div>
-                        <button className='bg-[#C76B98] text-white px-5 leading-10 rounded-xl'>Sign Up</button>
+                        <SignupModal/>
                     </div>
                 </span>
             </div>

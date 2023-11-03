@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import TopMenu from '@/components/TopMenu'
+import {Provider} from "./provider";
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -17,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className='w-full'>
-        <TopMenu/>
-        {children}
+        <Provider>
+          <TopMenu/>
+          {children}
+        </Provider>
       </body>
     </html>
   )
