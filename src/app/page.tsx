@@ -1,5 +1,5 @@
 import Banner from '@/components/Banner'
-import BookingModal from '@/components/BookingModal'
+import ShopList from '@/components/ShopList'
 export default function Home() {
 
   return (
@@ -15,7 +15,7 @@ export default function Home() {
           </div>
           <button className='text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4'>Search</button>
         </div>
-        <BookingModal />
+        <ShopList />
       </div>
     </main>
   )

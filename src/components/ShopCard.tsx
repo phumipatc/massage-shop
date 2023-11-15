@@ -19,7 +19,7 @@ export default function ShopCard({ shop, onBooking, onOpenModal }: { shop: Shop,
                         <p className='text-base lg:text-lg font-semibold'>Province: {shop.province}</p>
                         <p className='text-base lg:text-lg font-semibold'>Postal code: {shop.postalcode}</p>
                     </div>
-                    <button className='bg-[#C76B98] text-white h-full w-24 lg:w-32 hidden md:block' onClick={()=>{onBooking(shop.id); onOpenModal();}}>
+                    <button className='bg-[#C76B98] text-white h-full w-24 lg:w-32 hidden md:block' onClick={()=>{onBooking(shop); onOpenModal();}}>
                         Book Now
                     </button>
                 </div>

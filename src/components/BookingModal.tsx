@@ -1,49 +1,55 @@
 'use client'
 import React, { useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select} from "@nextui-org/react";
+import Shop from "@/types/shop";
 import ShopCard from "./ShopCard";
+import Shops from "@/types/Shops";
 
-export default function BookingModal() {
-  const mockShop = [
-    {
-      id: '1',
-      name: "BossYOYO's Massage Shop",
-      address: "temp",
-      priceLevel: 3,
-      province: 'Bangkok',
-      postalcode: '13100',
-      picture: '/img/mock_shop1.jpg'
-    },
-    {
-      id: '2',
-      name: "Rayong Massage Parlor",
-      address: "temp",
-      priceLevel: 2,
-      province: 'Rayong',
-      postalcode: '21000',
-      picture: '/img/mock_shop2.jpg'
-    },
-    {
-      id: '3',
-      name: "Top Massage",
-      address: "temp",
-      priceLevel: 1,
-      province: 'Bangkok',
-      postalcode: '13100',
-      picture: '/img/mock_shop3.jpg'
-    }
-  ]
-  
+export default function BookingModal({shops}:{shops:Shops}) {
+  // 	const mockShop = [
+	// 	{
+	// 	  id: '1',
+	// 	  name: "BossYOYO's Massage Shop",
+	// 	  address: "temp",
+	// 	  priceLevel: 3,
+	// 	  province: 'Bangkok',
+	// 	  postalcode: '13100',
+	// 	  picture: '/img/mock_shop1.jpg'
+	// 	},
+	// 	{
+	// 	  id: '2',
+	// 	  name: "Rayong Massage Parlor",
+	// 	  address: "temp",
+	// 	  priceLevel: 2,
+	// 	  province: 'Rayong',
+	// 	  postalcode: '21000',
+	// 	  picture: '/img/mock_shop2.jpg'
+	// 	},
+	// 	{
+	// 	  id: '3',
+	// 	  name: "Top Massage",
+	// 	  address: "temp",
+	// 	  priceLevel: 1,
+	// 	  province: 'Bangkok',
+	// 	  postalcode: '13100',
+	// 	  picture: 'https://drive.google.com/uc?id=1PXXde6Rl7RVZMHP0BYit95hPIRhcKPvT'
+	// 	}
+	// ]
+
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [shopId, setShopId] = useState('not selected')
+  const [shopName, setShopName] = useState('not selected')
+
+  function selectShop(shop:Shop) {
+    setShopId(shop.id)
+    setShopName(shop.name)
+  }
 
   return (
     <>
-      <div className='flex flex-col gap-3 md:gap-6 m-5 mt-8 w-full items-center'>
-          {mockShop.map((shop,index) => (
-            <ShopCard key={index} shop={shop} onBooking={setShopId} onOpenModal={onOpen}/>
-          ))}
-        </div>
+      {shops.data.map((shop:Shop) => (
+			  <ShopCard key={shop.id} shop={shop} onBooking={selectShop} onOpenModal={onOpen}/>
+		  ))}
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -52,7 +58,7 @@ export default function BookingModal() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Booking for {shopId}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Booking for {shopName}</ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus
