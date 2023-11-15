@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select} from "@nextui-org/react";
 import Shop from "@/types/shop";
 import ShopCard from "./ShopCard";
-import Shops from "@/types/Shops";
+import shops from "@/types/shops";
 
-export default function BookingModal({shops}:{shops:Shops}) {
+export default function BookingModal({shops}:{shops:shops}) {
   // 	const mockShop = [
 	// 	{
 	// 	  id: '1',
