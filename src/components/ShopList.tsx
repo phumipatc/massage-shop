@@ -1,5 +1,7 @@
 import getShops from "@/libs/getShops"
 import BookingModal from "./BookingModal"
+import { Suspense } from "react"
+import { LinearProgress } from "@mui/material"
 
 export default async function ShopList() {
 
@@ -8,7 +10,9 @@ export default async function ShopList() {
 
 	return (
 		<div className='flex flex-col gap-3 md:gap-6 m-5 mt-8 w-full items-center'>
-		  <BookingModal shops={shops}/>
+			<Suspense fallback={<p>Loading...<LinearProgress /></p>}>
+				<BookingModal shops={shops}/>
+			</Suspense>
         </div>
 	)
 }
