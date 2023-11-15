@@ -1,7 +1,7 @@
 import Reservation from "@/types/reservation";
 import Image from "next/image";
 
-export default function ReservationCard({reservation}: {reservation: Reservation}) {
+export default function ReservationCard({reservation, setReservationId, onOpenModal}: {reservation: Reservation, setReservationId: Function, onOpenModal: Function}) {
 	return (
 		// background color: rgba(240, 159, 156, 1)
 		<div className='w-2/3 my-5 mx-auto md:w-5/6 md:h-64 bg-[#F09F9C] rounded-md shadow-lg md:flex overflow-hidden border-1 border-gray-600'>
