@@ -16,7 +16,7 @@ export default function SignupModal() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus
@@ -30,25 +30,13 @@ export default function SignupModal() {
                   type="password"
                   variant="bordered"
                 />
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: "text-small",
-                    }}
-                  >
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="#" size="sm">
-                    Forgot password?
-                  </Link>
-                </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
                 <Button color="primary" onPress={onClose}>
-                  Sign in
+                  Sign up
                 </Button>
               </ModalFooter>
             </>
