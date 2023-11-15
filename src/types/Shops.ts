@@ -1,6 +1,6 @@
 import Shop from "./shop";
 
-export default interface Shops {
+export default interface shops {
 	success: boolean;
 	count: number;
 	data: Shop[];	
