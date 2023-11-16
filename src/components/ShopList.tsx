@@ -9,7 +9,7 @@ export default async function ShopList() {
 	// console.log(shops)
 
 	return (
-		<div className='flex flex-col gap-3 md:gap-6 m-5 mt-8 w-full items-center'>
+		<div className='flex flex-col gap-3 md:gap-6 m-5 mt-10 w-full items-center'>
 			<Suspense fallback={<p>Loading...<LinearProgress /></p>}>
 				<BookingModal shops={shops}/>
 			</Suspense>

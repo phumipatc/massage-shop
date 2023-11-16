@@ -1,6 +1,6 @@
 import user from "@/types/user";
 
-export default async function (user: user) {
+export default async function registerUser(user: user) {
 	const res = await fetch('http://localhost:5000/api/v1/auth/register', {
 		method: 'POST',
 		headers: {
