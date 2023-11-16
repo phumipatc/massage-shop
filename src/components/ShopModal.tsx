@@ -7,7 +7,7 @@ import BookingModal from "./BookingModal";
 import updateShop from "@/libs/updateShop";
 import { useSession } from "next-auth/react";
 
-export default function ShopModal({shops}:{shops:Shops}) {
+export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}) {
   const { data: session } = useSession()
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -43,7 +43,7 @@ export default function ShopModal({shops}:{shops:Shops}) {
 
   return (
     <>
-      <BookingModal shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen}/>
+      <BookingModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen}/>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}

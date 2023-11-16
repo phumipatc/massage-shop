@@ -1,6 +1,6 @@
 import Shop from '@/types/shop'
 import Image from 'next/image'
-export default function ShopCard({ shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal }: { shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function }) {
+export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal }: { profile:Object, shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function }) {
 
     return (
         <div className='w-2/3 md:w-5/6 md:h-64 bg-white rounded-md shadow-md md:flex overflow-hidden border-1 border-gray-600'>
@@ -11,7 +11,10 @@ export default function ShopCard({ shop, onBooking, onOpenBookingModal, onSelect
                 <div className='flex justify-between bg-[#632B6C] h-1/4 pl-5 items-center text-white'>
                     <div className='flex'>
                         <h1 className='text-xl lg:text-2xl font-bold truncate hover:text-clip'>{shop.name}</h1>
-                        <Image width={1000} height={1000} src='/img/edit.png' alt='edit' className='ml-4  w-6 h-6 ml-2 cursor-pointer' onClick={()=>{onSelectShopToEdit(shop); onOpenEditModal();}}/>
+                        {profile?.data.role == 'admin'
+                            ?<Image width={1000} height={1000} src='/img/edit.png' alt='edit' className='ml-4  w-6 h-6 ml-2 cursor-pointer' onClick={()=>{onSelectShopToEdit(shop); onOpenEditModal();}}/>
+                            :null
+                        }
                     </div>
                     <div className='h-full bg-black items-center justify-center w-24 lg:w-32 hidden md:flex'>
                         <h1 className='text-lg font-semibold'>{"฿".repeat(shop.priceLevel)}</h1>

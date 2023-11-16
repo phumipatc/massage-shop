@@ -5,7 +5,7 @@ import Shop from "@/types/shop";
 import ShopCard from "./ShopCard";
 import shops from "@/types/shops";
 
-export default function BookingModal({shops, onSelectShopToEdit, onOpenEditModal}:{shops:shops, onSelectShopToEdit:Function, onOpenEditModal:Function}) {
+export default function BookingModal({profile, shops, onSelectShopToEdit, onOpenEditModal}:{profile:Object, shops:shops, onSelectShopToEdit:Function, onOpenEditModal:Function}) {
   // 	const mockShop = [
 	// 	{
 	// 	  id: '1',
@@ -48,7 +48,7 @@ export default function BookingModal({shops, onSelectShopToEdit, onOpenEditModal
   return (
     <>
       {shops.data.map((shop:Shop) => (
-			  <ShopCard key={shop.id} shop={shop} onBooking={selectShopToBook} onOpenBookingModal={onOpen} onSelectShopToEdit={onSelectShopToEdit} onOpenEditModal={onOpenEditModal}/>
+			  <ShopCard profile={profile} key={shop.id} shop={shop} onBooking={selectShopToBook} onOpenBookingModal={onOpen} onSelectShopToEdit={onSelectShopToEdit} onOpenEditModal={onOpenEditModal}/>
 		  ))}
       <Modal 
         isOpen={isOpen} 
