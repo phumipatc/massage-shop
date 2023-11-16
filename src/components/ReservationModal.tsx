@@ -11,7 +11,9 @@ export default function ReservationModal() {
 			date: "12-10-2023 12:00",
 			duration: 30,
 			phone: '0812345678',
-			picture: "/img/mock_reservation_1.png"
+			picture: "/img/mock_reservation_1.png",
+      shopId: '1',
+      createdAt: "12-10-2023 12:00"
 		},
 		{
 			id: '2',
@@ -19,7 +21,9 @@ export default function ReservationModal() {
 			date: "12-10-2023 12:00",
 			duration: 60,
 			phone: '0812345678',
-			picture: "/img/mock_reservation_1.png"
+			picture: "/img/mock_reservation_1.png",
+      shopId: '2',
+      createdAt: "12-10-2023 12:00"
 		},
 		{
 			id: '3',
@@ -27,7 +31,9 @@ export default function ReservationModal() {
 			date: "12-10-2023 12:00",
 			duration: 90,
 			phone: '0812345678',
-			picture: "/img/mock_reservation_1.png"
+			picture: "/img/mock_reservation_1.png",
+      shopId: '3',
+      createdAt: "12-10-2023 12:00"
 		}
 	]
   
@@ -59,12 +65,14 @@ export default function ReservationModal() {
                   placeholder="Enter your date"
                   type="date"
                   variant="bordered"
+                  required
                 />
                 <Input
                   label="Service Minutes"
                   placeholder="Enter your service minutes"
                   type="number"
                   variant="bordered"
+                  required
                 />
               </ModalBody>
               <ModalFooter>

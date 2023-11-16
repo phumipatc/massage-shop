@@ -66,6 +66,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				  value={shopName}
                   variant="bordered"
 				  onChange={(e) => setShopName(e.target.value)}
+				  required
                 />
 				<Input
 				  label="Address"
@@ -73,6 +74,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				  value={shopAddress}
 				  variant="bordered"
 				  onChange={(e) => setShopAddress(e.target.value)}
+				  required
 				/>
 				<Input
 				  label="Province"
@@ -80,6 +82,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				  value={shopProvince}
 				  variant="bordered"
 				  onChange={(e) => setShopProvince(e.target.value)}
+				  required
 				/>
 				<Input
 				  label="Postal code"
@@ -87,6 +90,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				  value={shopPostalcode}
 				  variant="bordered"
 				  onChange={(e) => setShopPostalcode(e.target.value)}
+				  required
 				/>
 				<Input
 				  label="Price level"
@@ -95,6 +99,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				  value={shopPriceLevel.toString()}
 				  variant="bordered"
 				  onChange={(e) => setShopPriceLevel(parseInt(e.target.value))}
+				  required
 				/>
 				<Input
 				  label="Picture"
@@ -102,6 +107,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				  value={shopPicture}
 				  variant="bordered"
 				  onChange={(e) => setShopPicture(e.target.value)}
+				  required
 				/>
               </ModalBody>
               <ModalFooter>

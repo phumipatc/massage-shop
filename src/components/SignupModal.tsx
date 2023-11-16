@@ -40,18 +40,21 @@ export default function SignupModal() {
                   placeholder="Enter your name"
                   variant="bordered"
                   onValueChange={(value) => setName(value)}
+                  required
                 />
                 <Input
                   label="Email"
                   placeholder="Enter your email"
                   variant="bordered"
                   onValueChange={(value) => setEmail(value)}
+                  required
                 />
                 <Input
                   label="Telephone number"
                   placeholder="Enter your number"
                   variant="bordered"
                   onValueChange={(value) => setTel(value)}
+                  required
                 />
                 <Input
                   label="Password"
@@ -59,6 +62,7 @@ export default function SignupModal() {
                   type="password"
                   variant="bordered"
                   onValueChange={(value) => setPassword(value)}
+                  required
                 />
               </ModalBody>
               <ModalFooter>
