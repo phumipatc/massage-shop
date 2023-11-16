@@ -6,6 +6,7 @@ import Shops from "@/types/shops";
 import BookingModal from "./BookingModal";
 import updateShop from "@/libs/updateShop";
 import { useSession } from "next-auth/react";
+import deleteShop from "@/libs/deleteShop";
 
 export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}) {
   const { data: session } = useSession()
@@ -39,6 +40,10 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 		priceLevel: shopPriceLevel,
 		picture: shopPicture
 	})
+  }
+
+  function handleDelete() {
+	deleteShop(session?.user.token || "", shopId)
   }
 
   return (
@@ -100,7 +105,7 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
 				/>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button color="danger" variant="flat" onPress={()=>{handleDelete(); onClose(); window.location.reload();}}>
                   Delete
                 </Button>
 				{/* reload windows */}
