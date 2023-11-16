@@ -4,6 +4,8 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkb
 import Shop from "@/types/shop";
 import ShopCard from "./ShopCard";
 import shops from "@/types/shops";
+import { useSession } from "next-auth/react";
+import createBooking from "@/libs/createBooking";
 
 export default function BookingModal({profile, shops, onSelectShopToEdit, onOpenEditModal}:{profile:Object, shops:shops, onSelectShopToEdit:Function, onOpenEditModal:Function}) {
   // 	const mockShop = [
@@ -36,13 +38,29 @@ export default function BookingModal({profile, shops, onSelectShopToEdit, onOpen
 	// 	}
 	// ]
 
+  const {data:session} = useSession();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [shopId, setShopId] = useState('not selected')
   const [shopName, setShopName] = useState('not selected')
+  const [date, setDate] = useState('not selected')
+  const [serviceMinute, setServiceMinute] = useState(0)
 
   function selectShopToBook(shop:Shop) {
     setShopId(shop.id)
     setShopName(shop.name)
+  }
+
+  function handleCreate(){
+    createBooking(session?.user.token || "", {
+      shopId: shopId,
+      date: date,
+      duration: serviceMinute,
+      createdAt: new Date().toISOString().slice(0,10),
+      id: 'not selected',
+      name: 'not selected',
+      phone: 'not selected',
+      picture: 'not selected',
+    })
   }
 
   return (
@@ -62,35 +80,28 @@ export default function BookingModal({profile, shops, onSelectShopToEdit, onOpen
               <ModalBody>
                 <Input
                   autoFocus
-                  label="Email"
-                  placeholder="Enter your email"
-                  variant="bordered"
-                />
-                <Input
-                  label="Password"
-                  placeholder="Enter your password"
-                  type="password"
-                  variant="bordered"
-                />
-                <Input
                   label="Date"
                   placeholder="Enter your date"
                   type="date"
                   variant="bordered"
+                  required
+                  onChange={(e)=>{setDate(e.target.value)}}
                 />
                 <Input
                   label="Service Minutes"
                   placeholder="Enter your service minutes"
                   type="number"
                   variant="bordered"
+                  required
+                  onChange={(e)=>{setServiceMinute(parseInt(e.target.value))}}
                 />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
-                  Sign up
+                <Button color="primary" onPress={()=>{handleCreate(); onClose();}}>
+                  Book
                 </Button>
               </ModalFooter>
             </>

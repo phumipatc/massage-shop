@@ -5,4 +5,6 @@ export default interface Reservation {
 	duration: number;
 	phone: string;
 	picture: string;
+	createdAt: string;
+	shopId: string;
 }
