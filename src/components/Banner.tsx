@@ -15,8 +15,8 @@ export default function Banner(){
     )
 
     const handleLogin = async () => {
-        const res = await signIn('Credentials', {
-            email: email,
+        const res = await signIn('credentials', {
+            username: email,
             password: password,
             redirect: false,
         }).then(res => {
