@@ -1,7 +1,8 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure} from "@nextui-org/react";
 import registerUser from "@/libs/registerUser";
+import ModalNoBtn from "@/components/ModalNoBtn";
 
 export default function SignupModal() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -9,9 +10,11 @@ export default function SignupModal() {
   const [email, setEmail] = useState("not set")
   const [tel, setTel] = useState("not set")
   const [password, setPassword] = useState("not set")
-
-  function sendRegistration(name: string, email: string, tel: string, password: string) {
-    registerUser({
+  const [isShow, setIsShow] = useState(false)
+  const [isOk, setIsOk] = useState(false)
+  const res = useRef(null)
+  async function sendRegistration(name: string, email: string, tel: string, password: string) {
+    const response = await registerUser({
       name: name,
       email: email,
       tel: tel,
@@ -19,11 +22,23 @@ export default function SignupModal() {
       password: password,
       createdAt: new Date().toISOString().slice(0, 10),
     })
+    if(response.success){
+      setIsOk(true)
+    }
+    else{
+      setIsOk(false)
+    }
+    res.current = response
 	}
-
   return (
     <>
-      <Button onPress={onOpen} className='bg-[#C76B98] text-white px-5 leading-10 rounded-xl'>Sign up</Button>
+      <ModalNoBtn isShow={isShow} modalTitle={isOk? "Sign up complete": "Sign up error"}>
+        {isOk?
+          `Sign up complete. User ${res.current?.name??'null'} is registered. Please login.`
+          : "An error has occured. Please recheck your information and try again."
+        }
+      </ModalNoBtn>
+      <Button onPress={onOpen} onClick={()=>{setIsShow(false)}} className='bg-[#C76B98] text-white px-5 leading-10 rounded-xl'>Sign up</Button>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -69,7 +84,7 @@ export default function SignupModal() {
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onClick={()=>{sendRegistration(name, email, tel, password); onClose()}}>
+                <Button color="primary" onClick={()=>{sendRegistration(name, email, tel, password); onClose(); setIsShow(true)}}>
                   Sign up
                 </Button>
               </ModalFooter>
