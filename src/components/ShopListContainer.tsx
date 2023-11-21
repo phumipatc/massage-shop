@@ -23,6 +23,7 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 	const [shopTel, setShopTel] = useState('not selected')
 	const [functionType, setFunctionType] = useState('not selected')
 	const pricelevel = [1, 2, 3]
+	
 	function selectShopToEdit(shop: Shop) {
 		setFunctionType('update')
 		setShopId(shop.id)
@@ -36,14 +37,14 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 	}
 
 	function clearShop() {
-		setShopId('not selected')
-		setShopName('not selected')
-		setShopAddress('not selected')
-		setShopProvince('not selected')
-		setShopPostalcode('not selected')
+		setShopId('')
+		setShopName('')
+		setShopAddress('')
+		setShopProvince('')
+		setShopPostalcode('')
 		setShopPriceLevel(0)
-		setShopPicture('not selected')
-		setShopTel('not selected')
+		setShopPicture('')
+		setShopTel('')
 	}
 
 	function handleCreate() {
@@ -76,12 +77,12 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 
 	return (
 		<>
-			<ShopModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen} />
 			{profile?.data.role == 'admin' ? 
 				<div className="flex w-full justify-center">
-					<Button color="primary" onClick={()=>{onOpen();setFunctionType('create');clearShop()}}>Add shop</Button>
+					<Button color="primary" onClick={()=>{onOpen();setFunctionType('create');clearShop()}}>Add more shop</Button>
 				</div> : null
 			}
+			<ShopModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen} />
 			<Modal
 				isOpen={isOpen}
 				onOpenChange={onOpenChange}
@@ -136,8 +137,8 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 									required
 								/>
 								<Input
-									label="Picture"
-									placeholder="Enter your picture"
+									label="Picture link"
+									placeholder="Enter your picture link"
 									value={shopPicture}
 									variant="bordered"
 									onChange={(e) => setShopPicture(e.target.value)}
