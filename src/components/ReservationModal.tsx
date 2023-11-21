@@ -1,52 +1,42 @@
 'use client'
 import React, { useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, Radio, RadioGroup} from "@nextui-org/react";
 import ReservationCard from "./ReservationCard";
+import { useSession } from "next-auth/react";
+import updateBooking from "@/libs/updateBooking";
+import Reservation from "@/types/reservation";
+import Reservations from "@/types/Reservations";
+import deleteBooking from "@/libs/deleteBooking";
 
-export default function ReservationModal() {
-	const mockReservations = [
-		{
-			id: '1',
-			name: "BossYOYO's Massage Shop",
-			date: "12-10-2023 12:00",
-			duration: 30,
-			phone: '0812345678',
-			picture: "/img/mock_reservation_1.png",
-      shopId: '1',
-      createdAt: "12-10-2023 12:00"
-		},
-		{
-			id: '2',
-			name: "Rayong Massage Parlor",
-			date: "12-10-2023 12:00",
-			duration: 60,
-			phone: '0812345678',
-			picture: "/img/mock_reservation_1.png",
-      shopId: '2',
-      createdAt: "12-10-2023 12:00"
-		},
-		{
-			id: '3',
-			name: "Top Massage",
-			date: "12-10-2023 12:00",
-			duration: 90,
-			phone: '0812345678',
-			picture: "/img/mock_reservation_1.png",
-      shopId: '3',
-      createdAt: "12-10-2023 12:00"
-		}
-	]
-  
+export default function ReservationModal({reservations}:{reservations:Reservations}) {
+	
+  const {data:session} = useSession();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const [reservationId, setReservationId] = useState('not selected')
+  const [reservation, setReservation] = useState<Reservation>()
+  const [date, setDate] = useState('not selected')
+  const [serviceMinute, setServiceMinute] = useState(0)
+  const servicehours = [60,90,120]
 
+  function handleUpdate(){
+    updateBooking(session?.user.token || "", {
+      ...reservation,
+      bookingDate: date,
+      serviceMinute: serviceMinute,
+      createdAt: new Date().toISOString().slice(0,10)
+    })
+  }
+
+  function handleDelete(){
+    deleteBooking(session?.user.token || "", reservation?._id || "")
+  }
+  
   return (
     <>
       <div className="w-full h-full mt-20">
 			<h1 className='text-5xl font-bold text-center pt-5 pb-5'>My reservations</h1>
 			{
-				mockReservations.map((reservation, index) => (
-					<ReservationCard key={index} reservation={reservation} setReservationId={setReservationId} onOpenModal={onOpen} />
+				reservations.data.map((reservation, index) => (
+					<ReservationCard key={index} reservation={reservation} setReservation={setReservation} onOpenModal={onOpen} />
 				))
 			}
 		</div>
@@ -58,29 +48,33 @@ export default function ReservationModal() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Reservation for {reservationId}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Reservation for {reservation?.shop.name}</ModalHeader>
               <ModalBody>
                 <Input
                   label="Date"
                   placeholder="Enter your date"
                   type="date"
                   variant="bordered"
+                  onChange={(e)=>setDate(e.target.value)}
                   required
                 />
-                <Input
-                  label="Service Minutes"
-                  placeholder="Enter your service minutes"
-                  type="number"
-                  variant="bordered"
-                  required
-                />
+                <RadioGroup
+                  label="Service"
+                  value={serviceMinute.toString()}
+                  onChange={(e)=>{setServiceMinute(Number(e.target.value))}}
+                  orientation="horizontal"
+                >
+                  {servicehours.map((hour:number) => (
+                    <Radio key={hour} value={hour.toString()}>{hour} minutes</Radio>
+                  ))}
+                </RadioGroup>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
+                <Button color="danger" variant="flat" onPress={()=>{handleDelete(); onClose(); window.location.reload();}}>
+                  Delete
                 </Button>
-                <Button color="primary" onPress={onClose}>
-                  Sign up
+                <Button color="primary" onPress={()=>{handleUpdate(); onClose(); window.location.reload();}}>
+                  Update
                 </Button>
               </ModalFooter>
             </>

@@ -1,5 +1,3 @@
-import Shop from "@/types/shop"
-
 export default async function deleteShop(token:string, shopId:string) {
 	const res = await fetch('http://localhost:5000/api/v1/shops/'+shopId, {
 		method: 'DELETE',

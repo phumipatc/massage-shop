@@ -1,8 +1,8 @@
-import ReservationModal from "@/components/ReservationModal";
+import ReservationList from "@/components/ReservationList";
 
 export default function reservations() {
 
 	return (
-		<ReservationModal />
+		<ReservationList />
 	);
 }

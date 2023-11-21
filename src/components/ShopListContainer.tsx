@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select} from "@nextui-org/react";
 import Shop from "@/types/shop";
 import Shops from "@/types/Shops";
-import BookingModal from "./ShopModal";
+import ShopModal from "./ShopModal";
 import updateShop from "@/libs/updateShop";
 import { useSession } from "next-auth/react";
 import deleteShop from "@/libs/deleteShop";
@@ -48,7 +48,7 @@ export default function ShopListContainer({profile, shops}:{profile:Object, shop
 
   return (
     <>
-      <BookingModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen}/>
+      <ShopModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen}/>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}

@@ -17,14 +17,14 @@ exports.getBookings = async (req, res, next) => {
         shop: shopId,
       }).populate({
         path: "shop",
-        select: "name address tel",
+        select: "name address tel picture",
       });
     } else {
       query = Booking.find({
         user: req.user.id,
       }).populate({
         path: "shop",
-        select: "name address tel",
+        select: "name address tel picture",
       });
     }
   } 
@@ -33,7 +33,7 @@ exports.getBookings = async (req, res, next) => {
     if (shopId) {
       query = Booking.find({ shop: shopId }).populate({
         path: "shop",
-        select: "name address tel",
+        select: "name address tel picture",
       }).populate({
         path: "user",
         select: "name email tel",
@@ -41,7 +41,7 @@ exports.getBookings = async (req, res, next) => {
     } else {
       query = Booking.find().populate({
         path: "shop",
-        select: "name address tel",
+        select: "name address tel picture",
       }).populate({
         path: "user",
         select: "name email tel",
@@ -72,7 +72,7 @@ exports.getBooking = async (req, res, next) => {
   {
     booking = await Booking.findById(req.params.id).populate({
       path: "shop",
-      select: "name address tel",
+      select: "name address tel picture",
     }).populate({
       path: "user",
       select: "name email tel",

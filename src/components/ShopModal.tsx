@@ -3,42 +3,37 @@ import React, { useState } from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select, RadioGroup, Radio} from "@nextui-org/react";
 import Shop from "@/types/shop";
 import ShopCard from "./ShopCard";
-import shops from "@/types/Shops";
+import Shops from "@/types/Shops";
 import { useSession } from "next-auth/react";
 import createBooking from "@/libs/createBooking";
 
-export default function ShopModal({profile, shops, onSelectShopToEdit, onOpenEditModal}:{profile:Object, shops:shops, onSelectShopToEdit:Function, onOpenEditModal:Function}) {
+export default function ShopModal({profile, shops, onSelectShopToEdit, onOpenEditModal}:{profile:Object, shops:Shops, onSelectShopToEdit:Function, onOpenEditModal:Function}) {
   
   const {data:session} = useSession();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const [shopId, setShopId] = useState('not selected')
-  const [shopName, setShopName] = useState('not selected')
+  const [shop, setShop] = useState<Shop>()
   const [date, setDate] = useState('not selected')
   const [serviceMinute, setServiceMinute] = useState(0)
+  const servicehours = [60,90,120]
 
   function selectShopToBook(shop:Shop) {
-    setShopId(shop.id)
-    setShopName(shop.name)
+    setShop(shop)
   }
 
   function handleCreate(){
     createBooking(session?.user.token || "", {
-      shopId: shopId,
-      date: date,
-      duration: serviceMinute,
-      createdAt: new Date().toISOString().slice(0,10),
-      id: 'not selected',
-      name: 'not selected',
-      phone: 'not selected',
-      picture: 'not selected',
+      shop: shop,
+      bookingDate: date,
+      serviceMinute: serviceMinute,
+      createdAt: new Date().toISOString().slice(0,10)
     })
   }
-  const servicehours = [60,90,120]
   return (
     <>
       {shops.data.map((shop:Shop) => (
 			  <ShopCard profile={profile} key={shop.id} shop={shop} onBooking={selectShopToBook} onOpenBookingModal={onOpen} onSelectShopToEdit={onSelectShopToEdit} onOpenEditModal={onOpenEditModal}/>
-		  ))}
+		  )
+      )}
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -47,7 +42,7 @@ export default function ShopModal({profile, shops, onSelectShopToEdit, onOpenEdi
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Booking for {shopName}</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Booking for {shop?.name}</ModalHeader>
               <ModalBody>
                 <Input
                   autoFocus

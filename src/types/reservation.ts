@@ -1,10 +1,14 @@
 export default interface Reservation {
-	id: string;
-	name: string;
-	date: string;
-	duration: number;
-	phone: string;
-	picture: string;
-	createdAt: string;
-	shopId: string;
+	_id: string,
+	bookingDate: string,
+	serviceMinute: number,
+	user: string,
+	shop: {
+        _id: string,
+        name: string,
+        address: string,
+        tel: string,
+        picture: string
+    },
+    createdAt: string,
 }
