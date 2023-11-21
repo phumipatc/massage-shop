@@ -1,54 +1,44 @@
 'use client'
 import React, { useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select, RadioGroup, Radio} from "@nextui-org/react";
 import Shop from "@/types/shop";
-import Shops from "@/types/shops";
-import BookingModal from "./BookingModal";
-import updateShop from "@/libs/updateShop";
+import ShopCard from "./ShopCard";
+import shops from "@/types/Shops";
 import { useSession } from "next-auth/react";
-import deleteShop from "@/libs/deleteShop";
+import createBooking from "@/libs/createBooking";
 
-export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}) {
-  const { data: session } = useSession()
-
+export default function ShopModal({profile, shops, onSelectShopToEdit, onOpenEditModal}:{profile:Object, shops:shops, onSelectShopToEdit:Function, onOpenEditModal:Function}) {
+  
+  const {data:session} = useSession();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [shopId, setShopId] = useState('not selected')
   const [shopName, setShopName] = useState('not selected')
-  const [shopAddress, setShopAddress] = useState('not selected')
-  const [shopProvince, setShopProvince] = useState('not selected')
-  const [shopPostalcode, setShopPostalcode] = useState('not selected')
-  const [shopPriceLevel, setShopPriceLevel] = useState(0)
-  const [shopPicture, setShopPicture] = useState('not selected')
+  const [date, setDate] = useState('not selected')
+  const [serviceMinute, setServiceMinute] = useState(0)
 
-  function selectShopToEdit(shop:Shop) {
+  function selectShopToBook(shop:Shop) {
     setShopId(shop.id)
     setShopName(shop.name)
-	setShopAddress(shop.address)
-	setShopProvince(shop.province)
-	setShopPostalcode(shop.postalcode)
-	setShopPriceLevel(shop.priceLevel)
-	setShopPicture(shop.picture)
   }
 
-  function handleUpdate() {
-	updateShop(session?.user.token || "", {
-		id: shopId,
-		name: shopName,
-		address: shopAddress,
-		province: shopProvince,
-		postalcode: shopPostalcode,
-		priceLevel: shopPriceLevel,
-		picture: shopPicture
-	})
+  function handleCreate(){
+    createBooking(session?.user.token || "", {
+      shopId: shopId,
+      date: date,
+      duration: serviceMinute,
+      createdAt: new Date().toISOString().slice(0,10),
+      id: 'not selected',
+      name: 'not selected',
+      phone: 'not selected',
+      picture: 'not selected',
+    })
   }
-
-  function handleDelete() {
-	deleteShop(session?.user.token || "", shopId)
-  }
-
+  const servicehours = [60,90,120]
   return (
     <>
-      <BookingModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen}/>
+      {shops.data.map((shop:Shop) => (
+			  <ShopCard profile={profile} key={shop.id} shop={shop} onBooking={selectShopToBook} onOpenBookingModal={onOpen} onSelectShopToEdit={onSelectShopToEdit} onOpenEditModal={onOpenEditModal}/>
+		  ))}
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
@@ -61,62 +51,30 @@ export default function ShopModal({profile, shops}:{profile:Object, shops:Shops}
               <ModalBody>
                 <Input
                   autoFocus
-                  label="Shop Name"
-                  placeholder="Enter your shop name"
-				  value={shopName}
+                  label="Date"
+                  placeholder="Enter your date"
+                  type="date"
                   variant="bordered"
-				  onChange={(e) => setShopName(e.target.value)}
-				  required
+                  required
+                  onChange={(e)=>{setDate(e.target.value)}}
                 />
-				<Input
-				  label="Address"
-				  placeholder="Enter your address"
-				  value={shopAddress}
-				  variant="bordered"
-				  onChange={(e) => setShopAddress(e.target.value)}
-				  required
-				/>
-				<Input
-				  label="Province"
-				  placeholder="Enter your province"
-				  value={shopProvince}
-				  variant="bordered"
-				  onChange={(e) => setShopProvince(e.target.value)}
-				  required
-				/>
-				<Input
-				  label="Postal code"
-				  placeholder="Enter your postal code"
-				  value={shopPostalcode}
-				  variant="bordered"
-				  onChange={(e) => setShopPostalcode(e.target.value)}
-				  required
-				/>
-				<Input
-				  label="Price level"
-				  type="number"
-				  placeholder="Enter your price level"
-				  value={shopPriceLevel.toString()}
-				  variant="bordered"
-				  onChange={(e) => setShopPriceLevel(parseInt(e.target.value))}
-				  required
-				/>
-				<Input
-				  label="Picture"
-				  placeholder="Enter your picture"
-				  value={shopPicture}
-				  variant="bordered"
-				  onChange={(e) => setShopPicture(e.target.value)}
-				  required
-				/>
+                <RadioGroup
+                  label="Service"
+                  value={serviceMinute.toString()}
+                  onChange={(e)=>{setServiceMinute(Number(e.target.value))}}
+                  orientation="horizontal"
+                >
+                  {servicehours.map((hour:number) => (
+                    <Radio key={hour} value={hour.toString()}>{hour} minutes</Radio>
+                  ))}
+                </RadioGroup>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={()=>{handleDelete(); onClose(); window.location.reload();}}>
-                  Delete
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
                 </Button>
-				{/* reload windows */}
-                <Button color="primary" onPress={()=>{handleUpdate(); onClose(); window.location.reload();}}>
-                  Update
+                <Button color="primary" onPress={()=>{handleCreate(); onClose();}}>
+                  Book
                 </Button>
               </ModalFooter>
             </>

@@ -1,7 +1,7 @@
 import getShops from "@/libs/getShops"
 import { Suspense } from "react"
 import { LinearProgress } from "@mui/material"
-import ShopModal from "./ShopModal"
+import ShopModal from "./ShopListContainer"
 import getUserProfile from "@/libs/getUserProfile"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
