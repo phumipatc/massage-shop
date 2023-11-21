@@ -7,8 +7,9 @@ import updateBooking from "@/libs/updateBooking";
 import Reservation from "@/types/reservation";
 import Reservations from "@/types/Reservations";
 import deleteBooking from "@/libs/deleteBooking";
+import dayjs from "dayjs";
 
-export default function ReservationModal({reservations}:{reservations:Reservations}) {
+export default function ReservationModal({profile, reservations}:{profile:Object, reservations:Reservations}) {
 	
   const {data:session} = useSession();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -18,9 +19,9 @@ export default function ReservationModal({reservations}:{reservations:Reservatio
   const servicehours = [60,90,120]
 
   function selectReservationToEdit(reservation:Reservation){
+    setDate(reservation.bookingDate)
+    setServiceMinute(reservation.serviceMinute)
     setReservation(reservation)
-    setDate('not selected')
-    setServiceMinute(0)
   }
   function handleUpdate(){
     updateBooking(session?.user.token || "", {
@@ -41,7 +42,7 @@ export default function ReservationModal({reservations}:{reservations:Reservatio
 			<h1 className='text-5xl font-bold text-center pt-5 pb-5'>My reservations</h1>
 			{
 				reservations.data.map((reservation, index) => (
-					<ReservationCard key={index} reservation={reservation} selectReservationToEdit={selectReservationToEdit} onOpenModal={onOpen} />
+					<ReservationCard key={index} profile={profile} reservation={reservation} selectReservationToEdit={selectReservationToEdit} onOpenModal={onOpen} />
 				))
 			}
 		</div>
@@ -60,6 +61,7 @@ export default function ReservationModal({reservations}:{reservations:Reservatio
                   placeholder="Enter your date"
                   type="date"
                   variant="bordered"
+                  value={dayjs(date).format('YYYY-MM-DD')}
                   onChange={(e)=>setDate(e.target.value)}
                   required
                 />

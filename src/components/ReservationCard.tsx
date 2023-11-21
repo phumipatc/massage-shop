@@ -2,7 +2,8 @@ import Reservation from "@/types/reservation";
 import Image from "next/image";
 import dayjs from "dayjs";
 
-export default function ReservationCard({reservation, selectReservationToEdit, onOpenModal}: {reservation: Reservation, selectReservationToEdit: Function, onOpenModal: Function}) {
+export default function ReservationCard({profile, reservation, selectReservationToEdit, onOpenModal}: {profile: Object, reservation: Reservation, selectReservationToEdit: Function, onOpenModal: Function}) {
+	console.log(reservation)
 	return (
 		// background color: rgba(240, 159, 156, 1)
 		<div className='w-2/3 my-5 mx-auto md:w-5/6 md:h-64 bg-[#F09F9C] rounded-md shadow-lg md:flex overflow-hidden border-1 border-gray-600'>
@@ -14,9 +15,10 @@ export default function ReservationCard({reservation, selectReservationToEdit, o
 					</button>
                 </div>
                 <div className='flex flex-col gap-1 pt-5 pl-10 lg:pl-32 pb-10 mt-2 md:mt-5 mb-2 md:mb-0'>
-					<p className='text-base lg:text-xl font-semibold'>Date: {dayjs(reservation.bookingDate).format('DD/MM/YYYY')}</p>
+					<p className='text-base lg:text-xl font-semibold'>Date: {dayjs(reservation.bookingDate).format('MM/DD/YYYY')}</p>
 					<p className='text-base lg:text-xl font-semibold'>Duration: {reservation.serviceMinute} minutes</p>
 					<p className='text-base lg:text-xl font-semibold'>Telephone number: {reservation.shop.tel}</p>
+					{profile?.data.role == 'admin' ?<p className='text-base lg:text-xl font-semibold'>Customer name: {reservation.user.name}</p> : null}
                 </div>
             </div>
 			<div className='w-full md:w-1/3 h-1/2 md:h-full md:shrink-0'>
