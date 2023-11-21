@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select, RadioGroup, Radio } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, useDisclosure, RadioGroup, Radio } from "@nextui-org/react";
 import Shop from "@/types/shop";
 import Shops from "@/types/Shops";
 import ShopModal from "./ShopModal";

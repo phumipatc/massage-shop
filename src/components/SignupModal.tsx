@@ -1,6 +1,6 @@
 'use client'
-import React, { useEffect, useRef, useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure} from "@nextui-org/react";
+import React, { useRef, useState } from "react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, useDisclosure} from "@nextui-org/react";
 import registerUser from "@/libs/registerUser";
 import ModalNoBtn from "@/components/ModalNoBtn";
 

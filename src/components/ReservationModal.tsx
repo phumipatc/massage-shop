@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, Radio, RadioGroup} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, useDisclosure, Radio, RadioGroup} from "@nextui-org/react";
 import ReservationCard from "./ReservationCard";
 import { useSession } from "next-auth/react";
 import updateBooking from "@/libs/updateBooking";
