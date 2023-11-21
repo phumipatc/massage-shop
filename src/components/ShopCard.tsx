@@ -3,7 +3,7 @@ import Image from 'next/image'
 export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal }: { profile:Object, shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function }) {
 
     return (
-        <div className='w-2/3 md:w-5/6 md:h-64 bg-white rounded-md shadow-md md:flex overflow-hidden border-1 border-gray-600'>
+        <div className='w-2/3 md:w-5/6 md:h-64 bg-white rounded-md shadow-md md:flex overflow-hidden border-1 border-gray-600 hover:drop-shadow-2xl transition-all'>
             <div className='w-full md:w-1/3 h-1/2 md:h-full md:shrink-0'>
                 <Image width={1000} height={1000} src={shop.picture} alt={shop.name} className='md:h-full w-full object-cover'/>
             </div>
