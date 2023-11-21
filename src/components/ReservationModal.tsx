@@ -17,6 +17,11 @@ export default function ReservationModal({reservations}:{reservations:Reservatio
   const [serviceMinute, setServiceMinute] = useState(0)
   const servicehours = [60,90,120]
 
+  function selectReservationToEdit(reservation:Reservation){
+    setReservation(reservation)
+    setDate('not selected')
+    setServiceMinute(0)
+  }
   function handleUpdate(){
     updateBooking(session?.user.token || "", {
       ...reservation,
@@ -29,14 +34,14 @@ export default function ReservationModal({reservations}:{reservations:Reservatio
   function handleDelete(){
     deleteBooking(session?.user.token || "", reservation?._id || "")
   }
-  
+
   return (
     <>
       <div className="w-full h-full mt-20">
 			<h1 className='text-5xl font-bold text-center pt-5 pb-5'>My reservations</h1>
 			{
 				reservations.data.map((reservation, index) => (
-					<ReservationCard key={index} reservation={reservation} setReservation={setReservation} onOpenModal={onOpen} />
+					<ReservationCard key={index} reservation={reservation} selectReservationToEdit={selectReservationToEdit} onOpenModal={onOpen} />
 				))
 			}
 		</div>

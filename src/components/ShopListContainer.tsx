@@ -1,128 +1,185 @@
 'use client'
 import React, { useState } from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select} from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link, useDisclosure, select, RadioGroup, Radio } from "@nextui-org/react";
 import Shop from "@/types/shop";
 import Shops from "@/types/Shops";
 import ShopModal from "./ShopModal";
 import updateShop from "@/libs/updateShop";
 import { useSession } from "next-auth/react";
 import deleteShop from "@/libs/deleteShop";
+import createShop from "@/libs/createShop";
 
-export default function ShopListContainer({profile, shops}:{profile:Object, shops:Shops}) {
-  const { data: session } = useSession()
+export default function ShopListContainer({ profile, shops }: { profile: Object, shops: Shops }) {
+	const { data: session } = useSession()
 
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  const [shopId, setShopId] = useState('not selected')
-  const [shopName, setShopName] = useState('not selected')
-  const [shopAddress, setShopAddress] = useState('not selected')
-  const [shopProvince, setShopProvince] = useState('not selected')
-  const [shopPostalcode, setShopPostalcode] = useState('not selected')
-  const [shopPriceLevel, setShopPriceLevel] = useState(0)
-  const [shopPicture, setShopPicture] = useState('not selected')
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
+	const [shopId, setShopId] = useState('not selected')
+	const [shopName, setShopName] = useState('not selected')
+	const [shopAddress, setShopAddress] = useState('not selected')
+	const [shopProvince, setShopProvince] = useState('not selected')
+	const [shopPostalcode, setShopPostalcode] = useState('not selected')
+	const [shopPriceLevel, setShopPriceLevel] = useState(0)
+	const [shopPicture, setShopPicture] = useState('not selected')
+	const [shopTel, setShopTel] = useState('not selected')
+	const [functionType, setFunctionType] = useState('not selected')
+	const pricelevel = [1, 2, 3]
+	function selectShopToEdit(shop: Shop) {
+		setFunctionType('update')
+		setShopId(shop.id)
+		setShopName(shop.name)
+		setShopAddress(shop.address)
+		setShopProvince(shop.province)
+		setShopPostalcode(shop.postalcode)
+		setShopPriceLevel(shop.priceLevel)
+		setShopPicture(shop.picture)
+		setShopTel(shop.tel)
+	}
 
-  function selectShopToEdit(shop:Shop) {
-    setShopId(shop.id)
-    setShopName(shop.name)
-	setShopAddress(shop.address)
-	setShopProvince(shop.province)
-	setShopPostalcode(shop.postalcode)
-	setShopPriceLevel(shop.priceLevel)
-	setShopPicture(shop.picture)
-  }
+	function clearShop() {
+		setShopId('not selected')
+		setShopName('not selected')
+		setShopAddress('not selected')
+		setShopProvince('not selected')
+		setShopPostalcode('not selected')
+		setShopPriceLevel(0)
+		setShopPicture('not selected')
+		setShopTel('not selected')
+	}
 
-  function handleUpdate() {
-	updateShop(session?.user.token || "", {
-		id: shopId,
-		name: shopName,
-		address: shopAddress,
-		province: shopProvince,
-		postalcode: shopPostalcode,
-		priceLevel: shopPriceLevel,
-		picture: shopPicture
-	})
-  }
+	function handleCreate() {
+		createShop(session?.user.token || "", {
+			name: shopName,
+			address: shopAddress,
+			province: shopProvince,
+			postalcode: shopPostalcode,
+			priceLevel: shopPriceLevel,
+			tel: shopTel,
+			picture: shopPicture
+		})
+	}
+	function handleUpdate() {
+		updateShop(session?.user.token || "", {
+			id: shopId,
+			name: shopName,
+			address: shopAddress,
+			province: shopProvince,
+			postalcode: shopPostalcode,
+			priceLevel: shopPriceLevel,
+			tel: shopTel,
+			picture: shopPicture
+		})
+	}
 
-  function handleDelete() {
-	deleteShop(session?.user.token || "", shopId)
-  }
+	function handleDelete() {
+		deleteShop(session?.user.token || "", shopId)
+	}
 
-  return (
-    <>
-      <ShopModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen}/>
-      <Modal 
-        isOpen={isOpen} 
-        onOpenChange={onOpenChange}
-        placement="top-center"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Booking for {shopName}</ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  label="Shop Name"
-                  placeholder="Enter your shop name"
-				  value={shopName}
-                  variant="bordered"
-				  onChange={(e) => setShopName(e.target.value)}
-				  required
-                />
-				<Input
-				  label="Address"
-				  placeholder="Enter your address"
-				  value={shopAddress}
-				  variant="bordered"
-				  onChange={(e) => setShopAddress(e.target.value)}
-				  required
-				/>
-				<Input
-				  label="Province"
-				  placeholder="Enter your province"
-				  value={shopProvince}
-				  variant="bordered"
-				  onChange={(e) => setShopProvince(e.target.value)}
-				  required
-				/>
-				<Input
-				  label="Postal code"
-				  placeholder="Enter your postal code"
-				  value={shopPostalcode}
-				  variant="bordered"
-				  onChange={(e) => setShopPostalcode(e.target.value)}
-				  required
-				/>
-				<Input
-				  label="Price level"
-				  type="number"
-				  placeholder="Enter your price level"
-				  value={shopPriceLevel.toString()}
-				  variant="bordered"
-				  onChange={(e) => setShopPriceLevel(parseInt(e.target.value))}
-				  required
-				/>
-				<Input
-				  label="Picture"
-				  placeholder="Enter your picture"
-				  value={shopPicture}
-				  variant="bordered"
-				  onChange={(e) => setShopPicture(e.target.value)}
-				  required
-				/>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={()=>{handleDelete(); onClose(); window.location.reload();}}>
-                  Delete
-                </Button>
-				{/* reload windows */}
-                <Button color="primary" onPress={()=>{handleUpdate(); onClose(); window.location.reload();}}>
-                  Update
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </>
-  );
+	return (
+		<>
+			<ShopModal profile={profile} shops={shops} onSelectShopToEdit={selectShopToEdit} onOpenEditModal={onOpen} />
+			{profile?.data.role == 'admin' ? 
+				<div className="flex w-full justify-center">
+					<Button color="primary" onClick={()=>{onOpen();setFunctionType('create');clearShop()}}>Add shop</Button>
+				</div> : null
+			}
+			<Modal
+				isOpen={isOpen}
+				onOpenChange={onOpenChange}
+				placement="top-center"
+			>
+				<ModalContent>
+					{(onClose) => (
+						<>
+							<ModalHeader className="flex flex-col gap-1">{
+								(functionType == 'update')? 'Edit shop' : 'Add shop'
+							}</ModalHeader>
+							<ModalBody>
+								<Input
+									autoFocus
+									label="Shop Name"
+									placeholder="Enter your shop name"
+									value={shopName}
+									variant="bordered"
+									onChange={(e) => setShopName(e.target.value)}
+									required
+								/>
+								<Input
+									label="Address"
+									placeholder="Enter your address"
+									value={shopAddress}
+									variant="bordered"
+									onChange={(e) => setShopAddress(e.target.value)}
+									required
+								/>
+								<Input
+									label="Province"
+									placeholder="Enter your province"
+									value={shopProvince}
+									variant="bordered"
+									onChange={(e) => setShopProvince(e.target.value)}
+									required
+								/>
+								<Input
+									label="Postal code"
+									placeholder="Enter your postal code"
+									value={shopPostalcode}
+									variant="bordered"
+									onChange={(e) => setShopPostalcode(e.target.value)}
+									required
+								/>
+								<Input
+									label="Telephone number"
+									placeholder="Enter your telephone number"
+									value={shopTel}
+									variant="bordered"
+									onChange={(e) => setShopTel(e.target.value)}
+									required
+								/>
+								<Input
+									label="Picture"
+									placeholder="Enter your picture"
+									value={shopPicture}
+									variant="bordered"
+									onChange={(e) => setShopPicture(e.target.value)}
+									required
+								/>
+								<RadioGroup
+								label="Price level"
+								value={shopPriceLevel.toString()}
+								onChange={(e)=>{setShopPriceLevel(parseInt(e.target.value))}}
+								orientation="horizontal"
+								className="flex flex-row gap-x-5"
+								>
+								{pricelevel.map((level:number) => (
+									<Radio key={level} value={level.toString()}>{level}</Radio>
+								))}
+								</RadioGroup>
+							</ModalBody>
+							<ModalFooter>
+								{(functionType == 'update')?
+									<>
+										<Button color="danger" variant="flat" onPress={() => { handleDelete(); onClose(); window.location.reload(); }}>
+											Delete
+										</Button>
+										<Button color="primary" onPress={() => { handleUpdate(); onClose(); window.location.reload(); }}>
+											Update
+										</Button>
+									</>
+									:
+									<>
+										<Button color="danger" variant="flat" onPress={onClose}>
+											Close
+										</Button>
+										<Button color="primary" onPress={() => { handleCreate(); onClose(); window.location.reload();}}>
+											Add
+										</Button>
+									</>
+								}
+							</ModalFooter>
+						</>
+					)}
+				</ModalContent>
+			</Modal>
+		</>
+	);
 }

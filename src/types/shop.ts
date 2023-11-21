@@ -5,5 +5,6 @@ export default interface Shop {
     priceLevel: number;
     province: string;
     postalcode: string;
+    tel: string;
     picture: string;
 }
