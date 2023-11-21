@@ -20,6 +20,6 @@ export default async function createBooking(token: string, booking:Reservation|a
 	if(!res.ok){
 		throw new Error("Failed to create booking for" + booking.shop.id)
 	}
-
+	
 	return await res.json()
 }

@@ -1,6 +1,6 @@
 import Shop from '@/types/shop'
 import Image from 'next/image'
-export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal }: { profile:Object, shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function }) {
+export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal,setIsShow }: { profile:Object, shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function, setIsShow: Function }) {
 
     return (
         <div className='w-2/3 md:w-5/6 md:h-64 bg-white rounded-md shadow-md md:flex overflow-hidden border-1 border-gray-600 hover:drop-shadow-2xl transition-all'>
@@ -26,7 +26,7 @@ export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal,
                         <p className='text-base lg:text-lg font-semibold'>Province: {shop.province}</p>
                         <p className='text-base lg:text-lg font-semibold'>Postal code: {shop.postalcode}</p>
                     </div>
-                    <button className='bg-[#C76B98] text-white h-full w-24 lg:w-32 hidden md:block' onClick={()=>{onBooking(shop); onOpenBookingModal();}}>
+                    <button className='bg-[#C76B98] text-white h-full w-24 lg:w-32 hidden md:block' onClick={()=>{onBooking(shop); onOpenBookingModal(); setIsShow(false)}}>
                         Book Now
                     </button>
                 </div>
