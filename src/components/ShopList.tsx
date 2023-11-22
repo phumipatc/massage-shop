@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react"
 import { LinearProgress } from "@mui/material"
-import ShopModal from "./ShopListContainer"
+import ShopListContainer from "./ShopListContainer"
 import Shops from "@/types/Shops"
 import { Radio, RadioGroup } from "@nextui-org/react"
 
@@ -66,7 +66,7 @@ export default function ShopList({profile, shops}: {profile: Object, shops: Shop
 			</div>
 			<div className='flex flex-col gap-3 md:gap-6 m-5 mt-10 w-full items-center'>
 				<Suspense fallback={<p>Loading...<LinearProgress /></p>}>
-					<ShopModal profile={profile} shops={filteredShop} />
+					<ShopListContainer profile={profile} shops={filteredShop} />
 					{filteredShop.count == 0 ? <p className='text-2xl font-semibold'>No shop found</p> : null}
 				</Suspense>
 			</div>
