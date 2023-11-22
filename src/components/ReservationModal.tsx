@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, useDisclosure, Radio, RadioGroup} from "@nextui-org/react";
 import ReservationCard from "./ReservationCard";
 import { useSession } from "next-auth/react";
@@ -18,21 +18,27 @@ export default function ReservationModal({profile, reservations}:{profile:Object
   const [serviceMinute, setServiceMinute] = useState(0)
   const servicehours = [60,90,120]
   const [currentWantRole, setCurrentWantRole] = useState('user')
-  const [reservationsToShow, setReservationsToShow] = useState<Reservations>(reservations)
+  const [reservationsToShow, setReservationsToShow] = useState<Reservations>({
+    success: true,
+    count: reservations.data.filter((reservation)=>reservation.user._id == profile.data._id).length,
+    data: reservations.data.filter((reservation)=>reservation.user._id == profile.data._id)
+  })
 
   function currentWantRoleHandler(){
-    console.log(reservationsToShow)
     if(profile?.data.role == 'admin'){
       if(currentWantRole == 'user'){
         setCurrentWantRole('admin')
         reservationsToShow.data = reservations.data
+        reservationsToShow.count = reservations.data.length
       }else{
         setCurrentWantRole('user')
         reservationsToShow.data = reservations.data.filter((reservation)=>reservation.user._id == profile.data._id)
+        reservationsToShow.count = reservationsToShow.data.length
       }
     }else{
       setCurrentWantRole('user')
       reservationsToShow.data = reservations.data
+      reservationsToShow.count = reservations.data.length
     }
   }
 

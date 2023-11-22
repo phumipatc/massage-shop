@@ -46,7 +46,7 @@ export default function ShopList({profile, shops}: {profile: Object, shops: Shop
 	return (
 		<div>
 			<div className='m-5 mt-8 px-5 flex'>
-				<div className='flex gap-3 w-11/12'>
+				<div className='flex gap-3 w-11/12 justify-center'>
 					<input className='border-2 border-gray-300 rounded-md px-2 w-8/12' value={searchShopName} type='text' placeholder='Shop Name' onChange={(e) => setSearchShopName(e.target.value)} />
 					{/* <button className='border-2 border-gray-300 rounded-md px-2'>Province</button> */}
 					{/* <button className='border-2 border-gray-300 rounded-md px-2'>Price level</button> */}
@@ -55,14 +55,14 @@ export default function ShopList({profile, shops}: {profile: Object, shops: Shop
 						value={searchPriceLevel.toString()}
 						onChange={(e)=>{setSearchPriceLevel(parseInt(e.target.value))}}
 						orientation="horizontal"
-						className="flex flex-row gap-x-5 py-4 border-2 border-gray-300 rounded-md px-2"
+						className="flex flex-row justify-center gap-x-5 py-4 border-2 border-gray-300 rounded-md px-2 w-4/12"
 						>
 						{pricelevel.map((level:number) => (
 							<Radio key={level} value={level.toString()}>{level==0?'Any':level}</Radio>
 						))}
 					</RadioGroup>
+					<button className='text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4' onClick={searchHandler}>Search</button>
 				</div>
-				<button className='text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4' onClick={searchHandler}>Search</button>
 			</div>
 			<div className='flex flex-col gap-3 md:gap-6 m-5 mt-10 w-full items-center'>
 				<Suspense fallback={<p>Loading...<LinearProgress /></p>}>
