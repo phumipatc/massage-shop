@@ -4,7 +4,7 @@ import { Suspense, useEffect, useState } from "react"
 import { LinearProgress } from "@mui/material"
 import ShopListContainer from "./ShopListContainer"
 import Shops from "@/types/Shops"
-import { Radio, RadioGroup } from "@nextui-org/react"
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Radio, RadioGroup } from "@nextui-org/react"
 
 export default function ShopList({profile, shops}: {profile: Object, shops: Shops}) {
 
@@ -47,24 +47,28 @@ export default function ShopList({profile, shops}: {profile: Object, shops: Shop
 		<div>
 			<div className='m-5 mt-8 px-5 flex'>
 				<div className='flex gap-3 w-full justify-center flex-col lg:flex-row'>
-					<input className='border-2 border-gray-300 rounded-md px-2 w-full lg:w-1/3 h-14' value={searchShopName} type='text' placeholder='Shop Name' onChange={(e) => setSearchShopName(e.target.value)} />
+					<Dropdown>
+						<DropdownTrigger>
+							<Button 
+							variant="bordered" 
+							className="lg:w-1/5 h-10 lg:h-14 w-full"
+							>
+							Price level: {searchPriceLevel==0?'Any':searchPriceLevel}
+							</Button>
+						</DropdownTrigger>
+						<DropdownMenu aria-label="Static Actions" onAction={(key)=>{setSearchPriceLevel(key)}}>
+							{pricelevel.map((level:number) => (
+								<DropdownItem key={level}>{level==0?'Any':level}</DropdownItem>
+							))}
+						</DropdownMenu>
+					</Dropdown>
+					<input className='border-2 border-gray-300 rounded-md px-2 grow h-10 lg:h-14' value={searchShopName} type='text' placeholder='Shop Name' onChange={(e) => setSearchShopName(e.target.value)} />
 					{/* <button className='border-2 border-gray-300 rounded-md px-2'>Province</button> */}
 					{/* <button className='border-2 border-gray-300 rounded-md px-2'>Price level</button> */}
-					<RadioGroup
-						label="Price level"
-						value={searchPriceLevel.toString()}
-						onChange={(e)=>{setSearchPriceLevel(parseInt(e.target.value))}}
-						orientation="horizontal"
-						className="flex flex-row justify-center gap-x-5 py-4 border-2 border-gray-300 rounded-md px-2 w-full lg:w-4/12 h-14 grow"
-						>
-						{pricelevel.map((level:number) => (
-							<Radio key={level} value={level.toString()}>{level==0?'Any':level}</Radio>
-						))}
-					</RadioGroup>
-					<button className='text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4 h-14' onClick={searchHandler}>Search</button>
+					<button className='text-base lg:text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4 h-10 lg:h-14' onClick={searchHandler}>Search</button>
 				</div>
 			</div>
-			<div className='flex flex-col gap-3 lg:gap-6 mt-10 w-full items-center'>
+			<div className='flex flex-col gap-3 lg:gap-6 mt-5 lg:mt-10 w-full items-center'>
 				<Suspense fallback={<p>Loading...<LinearProgress /></p>}>
 					<ShopListContainer profile={profile} shops={filteredShop} />
 					{filteredShop.count == 0 ? <p className='text-2xl font-semibold'>No shop found</p> : null}
