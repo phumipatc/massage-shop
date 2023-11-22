@@ -62,7 +62,7 @@ export default function ReservationModal({profile, reservations}:{profile:Object
 
   return (
     <>
-      <div className="w-full h-full mt-20">
+      <div className="w-full h-full">
         <div className="w-full flex justify-center">
           <Button className='h-fit text-5xl font-bold text-center pt-5 pb-5' onClick={currentWantRoleHandler}>{currentWantRole == 'admin'?'All reservations':'My reservations'}</Button>
         </div>
