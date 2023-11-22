@@ -14,7 +14,7 @@ export default function ReservationCard({profile, reservation, selectReservation
 						<Image src='/img/edit.png' alt='edit' width={300} height={300} className='h-10 w-10'/>
 					</button>
                 </div>
-                <div className='flex flex-col gap-1 pt-2 pl-10 lg:pl-32 pb-10 mt-2 md:mt-5 mb-2 md:mb-0'>
+                <div className='flex flex-col gap-1 pl-10 lg:pl-32 mt-2 md:mt-5 mb-2 md:mb-0'>
 					<p className='text-base lg:text-xl font-semibold'>Date: {dayjs(reservation.bookingDate).format('MM/DD/YYYY')}</p>
 					<p className='text-base lg:text-xl font-semibold'>Duration: {reservation.serviceMinute} minutes</p>
 					<p className='text-base lg:text-xl font-semibold'>Telephone number: {reservation.shop.tel}</p>
