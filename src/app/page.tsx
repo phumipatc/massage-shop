@@ -6,7 +6,7 @@ export default async function Home() {
     <main className='w-full h-full'>
       <Banner/>
       <div className='px-7 md:px-20 pt-10'>
-        <h1 className='text-5xl m-5 font-bold'>Shop List</h1>
+        <h1 className='text-3xl md:text-5xl m-2 md:m-5 font-bold'>Shop List</h1>
         <ShopListServer/>
       </div>
     </main>
