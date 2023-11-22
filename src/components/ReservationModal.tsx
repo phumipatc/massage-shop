@@ -17,6 +17,24 @@ export default function ReservationModal({profile, reservations}:{profile:Object
   const [date, setDate] = useState('not selected')
   const [serviceMinute, setServiceMinute] = useState(0)
   const servicehours = [60,90,120]
+  const [currentWantRole, setCurrentWantRole] = useState('user')
+  const [reservationsToShow, setReservationsToShow] = useState<Reservations>(reservations)
+
+  function currentWantRoleHandler(){
+    console.log(reservationsToShow)
+    if(profile?.data.role == 'admin'){
+      if(currentWantRole == 'user'){
+        setCurrentWantRole('admin')
+        reservationsToShow.data = reservations.data
+      }else{
+        setCurrentWantRole('user')
+        reservationsToShow.data = reservations.data.filter((reservation)=>reservation.user._id == profile.data._id)
+      }
+    }else{
+      setCurrentWantRole('user')
+      reservationsToShow.data = reservations.data
+    }
+  }
 
   function selectReservationToEdit(reservation:Reservation){
     setDate(reservation.bookingDate)
@@ -39,13 +57,15 @@ export default function ReservationModal({profile, reservations}:{profile:Object
   return (
     <>
       <div className="w-full h-full mt-20">
-			<h1 className='text-5xl font-bold text-center pt-5 pb-5'>My reservations</h1>
-			{
-				reservations.data.map((reservation, index) => (
-					<ReservationCard key={index} profile={profile} reservation={reservation} selectReservationToEdit={selectReservationToEdit} onOpenModal={onOpen} />
-				))
-			}
-		</div>
+        <div className="w-full flex justify-center">
+          <Button className='h-fit text-5xl font-bold text-center pt-5 pb-5' onClick={currentWantRoleHandler}>{currentWantRole == 'admin'?'All reservations':'My reservations'}</Button>
+        </div>
+        {
+          reservationsToShow.data.map((reservation, index) => (
+            <ReservationCard key={index} profile={profile} reservation={reservation} selectReservationToEdit={selectReservationToEdit} onOpenModal={onOpen} />
+          ))
+        }
+      </div>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
