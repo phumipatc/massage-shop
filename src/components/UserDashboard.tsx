@@ -11,7 +11,7 @@ export default async function UserDashboard() {
     var createdAt = new Date(user.data.createdAt)
 
     return (
-        <main className='bg-slate-100 m-5 p-5'>
+        <main className='bg-slate-100 mb-5 p-5'>
             <div className='text-2xl'>{user.data.name}</div>
             <table className='table-auto border-separate border-spacing-2'><tbody>
                 <tr><td>Email</td><td>{user.data.email}</td></tr>

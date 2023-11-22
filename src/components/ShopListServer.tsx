@@ -15,7 +15,7 @@ export default async function ShopListServer() {
 	}
 
 	return (
-		<div>
+		<div className="mb-5">
 			<ShopList profile={profile} shops={shops}/>
 		</div>
 	)

@@ -6,7 +6,7 @@ export default function ReservationCard({profile, reservation, selectReservation
 
 	return (
 		// background color: rgba(240, 159, 156, 1)
-		<div className='w-2/3 my-5 mx-auto md:w-5/6 md:h-64 bg-[#F09F9C] rounded-md shadow-lg md:flex overflow-hidden border-1 border-gray-600'>
+		<div className='w-2/3 my-5 mx-auto md:w-5/6 md:h-64 bg-[#F09F9C] rounded-md shadow-lg md:flex overflow-hidden border-1 border-gray-600 hover:drop-shadow-2xl transition-all'>
 			<div className='w-full md:w-2/3 h-1/2 md:h-full'>
                 <div className='flex h-1/4 pt-16 pl-6 lg:pl-24 items-center gap-x-5'>
                     <h1 className='text-2xl lg:text-3xl font-bold hover:text-clip'>{reservation.shop.name}</h1>    

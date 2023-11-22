@@ -17,7 +17,7 @@ export default async function ReservationList() {
 	const reservations = await getBookings(session?.user.token||"")
 
 	return (
-		<div className='flex flex-col gap-3 md:gap-6 m-5 mt-10 w-full items-center'>
+		<div className='flex flex-col gap-3 md:gap-6 mt-10 w-full items-center'>
 			<Suspense fallback={<p>Loading...<LinearProgress /></p>}>
 				<ReservationModal reservations={reservations} profile={profile}/>
 			</Suspense>
