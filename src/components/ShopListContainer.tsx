@@ -47,8 +47,8 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 		setShopTel('')
 	}
 
-	function handleCreate() {
-		createShop(session?.user.token || "", {
+	async function handleCreate() {
+		await createShop(session?.user.token || "", {
 			name: shopName,
 			address: shopAddress,
 			province: shopProvince,
@@ -57,9 +57,10 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 			tel: shopTel,
 			picture: shopPicture
 		})
+		window.location.reload();
 	}
-	function handleUpdate() {
-		updateShop(session?.user.token || "", {
+	async function handleUpdate() {
+		await updateShop(session?.user.token || "", {
 			id: shopId,
 			name: shopName,
 			address: shopAddress,
@@ -69,10 +70,12 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 			tel: shopTel,
 			picture: shopPicture
 		})
+		window.location.reload();
 	}
 
-	function handleDelete() {
-		deleteShop(session?.user.token || "", shopId)
+	async function handleDelete() {
+		await deleteShop(session?.user.token || "", shopId)
+		window.location.reload();
 	}
 
 	return (
@@ -159,10 +162,10 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 							<ModalFooter>
 								{(functionType == 'update')?
 									<>
-										<Button color="danger" variant="flat" onPress={() => { handleDelete(); onClose(); window.location.reload(); }}>
+										<Button color="danger" variant="flat" onPress={() => { handleDelete(); onClose(); }}>
 											Delete
 										</Button>
-										<Button color="primary" onPress={() => { handleUpdate(); onClose(); window.location.reload(); }}>
+										<Button color="primary" onPress={() => { handleUpdate(); onClose(); }}>
 											Update
 										</Button>
 									</>
@@ -171,7 +174,7 @@ export default function ShopListContainer({ profile, shops }: { profile: Object,
 										<Button color="danger" variant="flat" onPress={onClose}>
 											Close
 										</Button>
-										<Button color="primary" onPress={() => { handleCreate(); onClose(); window.location.reload();}}>
+										<Button color="primary" onPress={() => { handleCreate(); onClose();}}>
 											Add
 										</Button>
 									</>

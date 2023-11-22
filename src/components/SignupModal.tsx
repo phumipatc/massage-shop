@@ -21,20 +21,17 @@ export default function SignupModal() {
       role: "user",
       password: password,
       createdAt: new Date().toISOString().slice(0, 10),
-    })
-    if(response.success){
+    }).then((response) => {
       setIsOk(true)
-    }
-    else{
-      setIsOk(false)
-    }
-    res.current = response
+    },(err) => {
+        setIsOk(false)
+    })
 	}
   return (
     <>
       <ModalNoBtn isShow={isShow} modalTitle={isOk? "Sign up complete": "Sign up error"}>
         {isOk?
-          `Sign up complete. User ${res.current?.name??'null'} is registered. Please login.`
+          `Sign up complete. User is registered. Please login.`
           : "An error has occured. Please recheck your information and try again."
         }
       </ModalNoBtn>

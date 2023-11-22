@@ -16,17 +16,17 @@ export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal,
                             :null
                         }
                     </div>
-                    <div className='h-full bg-black items-center justify-center w-24 lg:w-32 hidden md:flex'>
+                    <div className='h-full bg-black items-center justify-center w-24 lg:w-32 flex'>
                         <h1 className='text-lg font-semibold'>{"฿".repeat(shop.priceLevel)}</h1>
                     </div>
                 </div>
-                <div className='flex gap-2 justify-between h-3/4'>
+                <div className='flex gap-2 justify-between h-3/4 items-center'>
                     <div className='flex flex-col gap-1 pl-8 mt-2 md:mt-5 mb-2 md:mb-0'>
                         <p className='text-base lg:text-lg font-semibold'>Address: {shop.address}</p>
                         <p className='text-base lg:text-lg font-semibold'>Province: {shop.province}</p>
                         <p className='text-base lg:text-lg font-semibold'>Postal code: {shop.postalcode}</p>
                     </div>
-                    <button className='bg-[#C76B98] text-white h-full w-24 lg:w-32 hidden md:block' onClick={()=>{onBooking(shop); onOpenBookingModal(); setIsShow(false)}}>
+                    <button className='bg-[#C76B98] text-white h-32 md:h-full w-24 lg:w-32' onClick={()=>{onBooking(shop); onOpenBookingModal(); setIsShow(false)}}>
                         Book Now
                     </button>
                 </div>
