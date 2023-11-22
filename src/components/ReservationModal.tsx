@@ -24,17 +24,18 @@ export default function ReservationModal({profile, reservations}:{profile:Object
     if(profile?.data.role == 'admin'){
       if(currentWantRole == 'user'){
         setCurrentWantRole('admin')
-        reservationsToShow.data = reservations.data
-        reservationsToShow.count = reservations.data.length
+        setReservationsToShow(reservations)
       }else{
         setCurrentWantRole('user')
-        reservationsToShow.data = reservations.data.filter((reservation)=>reservation.user._id == profile.data._id)
-        reservationsToShow.count = reservations.data.filter((reservation)=>reservation.user._id == profile.data._id).length
+        setReservationsToShow({
+          success: true,
+          data: reservations.data.filter((reservation)=>reservation.user._id == profile.data._id),
+          count: reservations.data.filter((reservation)=>reservation.user._id == profile.data._id).length
+        })
       }
     }else{
       setCurrentWantRole('user')
-      reservationsToShow.data = reservations.data
-      reservationsToShow.count = reservations.data.length
+      setReservationsToShow(reservations)
     }
   }
 
