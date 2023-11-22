@@ -17,12 +17,8 @@ export default function ReservationModal({profile, reservations}:{profile:Object
   const [date, setDate] = useState('not selected')
   const [serviceMinute, setServiceMinute] = useState(0)
   const servicehours = [60,90,120]
-  const [currentWantRole, setCurrentWantRole] = useState('user')
-  const [reservationsToShow, setReservationsToShow] = useState<Reservations>({
-    success: true,
-    count: reservations.data.filter((reservation)=>reservation.user._id == profile.data._id).length,
-    data: reservations.data.filter((reservation)=>reservation.user._id == profile.data._id)
-  })
+  const [currentWantRole, setCurrentWantRole] = useState('admin')
+  const [reservationsToShow, setReservationsToShow] = useState<Reservations>(reservations)
 
   function currentWantRoleHandler(){
     if(profile?.data.role == 'admin'){
@@ -33,7 +29,7 @@ export default function ReservationModal({profile, reservations}:{profile:Object
       }else{
         setCurrentWantRole('user')
         reservationsToShow.data = reservations.data.filter((reservation)=>reservation.user._id == profile.data._id)
-        reservationsToShow.count = reservationsToShow.data.length
+        reservationsToShow.count = reservations.data.filter((reservation)=>reservation.user._id == profile.data._id).length
       }
     }else{
       setCurrentWantRole('user')
@@ -64,7 +60,7 @@ export default function ReservationModal({profile, reservations}:{profile:Object
     <>
       <div className="w-full h-full mt-20">
         <div className="w-full flex justify-center">
-          <Button className='h-fit text-5xl font-bold text-center pt-5 pb-5' onClick={currentWantRoleHandler}>{currentWantRole == 'admin'?'All reservations':'My reservations'}</Button>
+          <Button className='h-fit text-5xl font-bold text-center pt-5 pb-5' onClick={currentWantRoleHandler}>{(currentWantRole == 'admin' && profile?.data.role == 'admin')?'All reservations':'My reservations'}</Button>
         </div>
         {
           reservationsToShow.data.map((reservation, index) => (
