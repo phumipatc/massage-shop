@@ -1,6 +1,6 @@
 import Shop from '@/types/shop'
 import Image from 'next/image'
-export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal,setIsShow }: { profile:Object, shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function, setIsShow: Function }) {
+export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal, onSelectShopToEdit, onOpenEditModal }: { profile:Object, shop: Shop, onBooking: Function, onOpenBookingModal: Function, onSelectShopToEdit: Function, onOpenEditModal: Function }) {
 
     return (
         <div className='w-2/3 md:w-5/6 md:h-64 bg-white rounded-md shadow-md md:flex overflow-hidden border-1 border-gray-600 hover:drop-shadow-2xl transition-all'>
@@ -21,12 +21,13 @@ export default function ShopCard({ profile, shop, onBooking, onOpenBookingModal,
                     </div>
                 </div>
                 <div className='flex gap-2 justify-between h-3/4 items-center'>
-                    <div className='flex flex-col gap-1 pl-8 mt-2 md:mt-5 mb-2 md:mb-0'>
-                        <p className='text-base lg:text-lg font-semibold'>Address: {shop.address}</p>
-                        <p className='text-base lg:text-lg font-semibold'>Province: {shop.province}</p>
-                        <p className='text-base lg:text-lg font-semibold'>Postal code: {shop.postalcode}</p>
+                    <div className='flex flex-col gap-1 pl-8 md:mb-0'>
+                        <p className='text-sm sm:text-base lg:text-lg font-semibold'>Address: {shop.address}</p>
+                        <p className='text-sm sm:text-base lg:text-lg font-semibold'>Province: {shop.province}</p>
+                        <p className='text-sm sm:text-base lg:text-lg font-semibold'>Postal code: {shop.postalcode}</p>
+                        <p className='text-sm sm:text-base lg:text-lg font-semibold'>Phone number: {shop.tel}</p>
                     </div>
-                    <button className='bg-[#C76B98] text-white h-32 md:h-full w-24 lg:w-32' onClick={()=>{onBooking(shop); onOpenBookingModal(); setIsShow(false)}}>
+                    <button className='bg-[#C76B98] text-white h-32 md:h-full w-24 lg:w-32' onClick={()=>{onBooking(shop); onOpenBookingModal();}}>
                         Book Now
                     </button>
                 </div>

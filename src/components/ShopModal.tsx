@@ -29,6 +29,7 @@ export default function ShopModal({ profile, shops, onSelectShopToEdit, onOpenEd
         setShop(shop)
         setDate('not selected')
         setServiceMinute(0)
+        setIsShow(false)
     }
 
     async function handleCreate() {
@@ -45,12 +46,13 @@ export default function ShopModal({ profile, shops, onSelectShopToEdit, onOpenEd
             bookings.then((res) => {
                 if (res.data.length >= 3) {
                     setIsOk(1)
+                    setIsShow(true)
                 }
                 else {
                     setIsOk(0)
+                    setIsShow(true)
                 }
             })
-            setIsShow(true)
         })
     }
     return (
@@ -60,7 +62,7 @@ export default function ShopModal({ profile, shops, onSelectShopToEdit, onOpenEd
                 {isOk==2?<Link href={`/reservations/`}>Click here to see your booking</Link>:null}
             </ModalNoBtn>
             {shops.data.map((shop: Shop) => (
-                <ShopCard profile={profile} key={shop.id} shop={shop} onBooking={selectShopToBook} setIsShow={setIsShow} onOpenBookingModal={onOpen} onSelectShopToEdit={onSelectShopToEdit} onOpenEditModal={onOpenEditModal} />
+                <ShopCard profile={profile} key={shop.id} shop={shop} onBooking={selectShopToBook} onOpenBookingModal={onOpen} onSelectShopToEdit={onSelectShopToEdit} onOpenEditModal={onOpenEditModal} />
             )
             )}
             <Modal
