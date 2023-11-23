@@ -59,11 +59,12 @@ export default function ReservationModal({profile, reservations}:{profile:Object
 
   return (
     <>
-      <div className="w-full h-full">
-        <div className="w-full flex justify-center">
+      <div className="w-full h-full flex flex-col justify-center items-center gap-5">
           <Button className='h-fit text-5xl font-bold text-center pt-5 pb-5' onClick={currentWantRoleHandler}>{(currentWantRole == 'admin' && profile?.data.role == 'admin')?'All reservations':'My reservations'}</Button>
-        </div>
         {
+          reservationsToShow.count == 0
+          ? <p className='text-2xl font-semibold'>No shop found</p>
+          :
           reservationsToShow.data.map((reservation, index) => (
             <ReservationCard key={index} profile={profile} reservation={reservation} selectReservationToEdit={selectReservationToEdit} onOpenModal={onOpen} />
           ))
