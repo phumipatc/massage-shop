@@ -62,7 +62,7 @@ export default function ShopList({profile, shops}: {profile: Object, shops: Shop
 							))}
 						</DropdownMenu>
 					</Dropdown>
-					<input className='border-2 border-gray-300 rounded-md px-2 grow h-10 lg:h-14' value={searchShopName} type='text' placeholder='Shop Name' onChange={(e) => setSearchShopName(e.target.value)} />
+					<input className='border-2 border-gray-300 rounded-md px-2 grow h-10 lg:h-14 pl-0 lg:pl-5 text-center lg:text-left' value={searchShopName} type='text' placeholder='Shop Name' onChange={(e) => setSearchShopName(e.target.value)} />
 					{/* <button className='border-2 border-gray-300 rounded-md px-2'>Province</button> */}
 					{/* <button className='border-2 border-gray-300 rounded-md px-2'>Price level</button> */}
 					<button className='text-base lg:text-2xl font-semibold border-2 border-gray-300 rounded-md p-2 px-4 h-10 lg:h-14' onClick={searchHandler}>Search</button>
